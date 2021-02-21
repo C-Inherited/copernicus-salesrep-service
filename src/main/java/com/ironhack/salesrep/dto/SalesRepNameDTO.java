@@ -1,0 +1,21 @@
+package com.ironhack.salesrep.dto;
+
+import javax.validation.constraints.NotEmpty;
+
+public class SalesRepNameDTO {
+
+    @NotEmpty
+    private String name;
+
+    public SalesRepNameDTO(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
