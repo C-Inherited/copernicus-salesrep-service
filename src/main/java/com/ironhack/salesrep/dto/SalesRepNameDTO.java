@@ -7,6 +7,9 @@ public class SalesRepNameDTO {
     @NotEmpty
     private String name;
 
+    public SalesRepNameDTO() {
+    }
+
     public SalesRepNameDTO(String name) {
         this.name = name;
     }
