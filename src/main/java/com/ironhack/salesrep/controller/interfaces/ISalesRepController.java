@@ -12,5 +12,5 @@ public interface ISalesRepController {
 
     public SalesRepDTO updateSalesRep(SalesRepNameDTO name, Integer id);
 
-    public void updateSalesRep(Integer id);
+    public void deleteSalesRep(Integer id);
 }

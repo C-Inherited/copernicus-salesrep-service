@@ -37,7 +37,7 @@ public class SalesRepController implements ISalesRepController {
 
     @DeleteMapping("/salesrep/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateSalesRep(@PathVariable(name = "id") Integer id) {
+    public void deleteSalesRep(@PathVariable(name = "id") Integer id) {
         service.deleteSalesRep(id);
     }
 }
