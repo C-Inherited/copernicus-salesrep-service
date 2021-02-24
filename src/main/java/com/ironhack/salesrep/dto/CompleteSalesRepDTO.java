@@ -21,6 +21,11 @@ public class CompleteSalesRepDTO {
         this.leads = leads;
     }
 
+    public CompleteSalesRepDTO(Integer salesRepId, String name) {
+        this.salesRepId = salesRepId;
+        this.name = name;
+    }
+
     public CompleteSalesRepDTO(String name) {
         this.name = name;
     }
