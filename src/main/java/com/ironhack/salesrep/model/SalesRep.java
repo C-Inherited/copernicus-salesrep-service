@@ -1,6 +1,7 @@
 package com.ironhack.salesrep.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class SalesRep {
@@ -33,4 +34,16 @@ public class SalesRep {
         this.name = name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SalesRep salesRep = (SalesRep) o;
+        return Objects.equals(salesRepId, salesRep.salesRepId) && Objects.equals(name, salesRep.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(salesRepId, name);
+    }
 }
