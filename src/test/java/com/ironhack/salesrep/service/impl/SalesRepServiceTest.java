@@ -7,7 +7,6 @@ import com.ironhack.salesrep.dto.SalesRepDTO;
 import com.ironhack.salesrep.dto.SalesRepNameDTO;
 import com.ironhack.salesrep.model.SalesRep;
 import com.ironhack.salesrep.repository.SalesRepRepository;
-import io.vavr.collection.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -43,8 +41,8 @@ class SalesRepServiceTest {
 
     @Test
     void findSalesRepById() {
-        when(leadClient.findAllBySalesRepId(anyInt(), anyString())).thenReturn(null);
-        when(opportunityClient.findAllBySalesRepId(anyInt(),anyString())).thenReturn(null);
+        when(leadClient.findAllBySalesRepId(1, null)).thenReturn(null);
+        when(opportunityClient.findAllBySalesRepId(1,null)).thenReturn(null);
         when(salesRepRepository.findById(1)).thenReturn(Optional.of(new SalesRep("sergito")));
 
         CompleteSalesRepDTO completeSalesRepDTO = salesRepService.findById(1);
@@ -64,7 +62,7 @@ class SalesRepServiceTest {
     @Test
     void findSalesRepById_lead_down() {
         when(salesRepRepository.findById(1)).thenReturn(Optional.empty());
-        when(leadClient.findAllBySalesRepId(anyInt(),anyString())).thenThrow(ResponseStatusException.class);
+        when(leadClient.findAllBySalesRepId(1,null)).thenThrow(ResponseStatusException.class);
 
         assertThrows(ResponseStatusException.class, () -> {
             salesRepService.findById(1);
@@ -74,8 +72,8 @@ class SalesRepServiceTest {
     @Test
     void findSalesRepById_opportunity_down() {
         when(salesRepRepository.findById(1)).thenReturn(Optional.empty());
-        when(leadClient.findAllBySalesRepId(anyInt(),anyString())).thenReturn(null);
-        when(opportunityClient.findAllBySalesRepId(anyInt(),anyString())).thenThrow(ResponseStatusException.class);
+        when(leadClient.findAllBySalesRepId(1,null)).thenReturn(null);
+        when(opportunityClient.findAllBySalesRepId(1,null)).thenThrow(ResponseStatusException.class);
 
         assertThrows(ResponseStatusException.class, () -> {
             salesRepService.findById(1);

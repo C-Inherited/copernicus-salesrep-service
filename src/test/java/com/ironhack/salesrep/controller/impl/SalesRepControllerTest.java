@@ -46,7 +46,8 @@ class SalesRepControllerTest {
         when(service.findById(1)).thenReturn(new CompleteSalesRepDTO(1, "nerea"));
 
         MvcResult result = mockMvc
-                .perform(get("/salesrep/1"))
+                .perform(get("/salesrep/1")
+                        .header("Authorization", "Bearer auth"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -61,6 +62,7 @@ class SalesRepControllerTest {
         String body = objectMapper.writeValueAsString(new SalesRepDTO("nerea"));
         MvcResult result = mockMvc
                 .perform(post("/salesrep")
+                        .header("Authorization", "Bearer auth")
                         .content(body)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
@@ -72,11 +74,12 @@ class SalesRepControllerTest {
     @Test
     void updateSalesRep() throws Exception {
         String expectedResponse = "{\"salesRepId\":1,\"name\":\"laura\"}";
-        when(service.updateSalesRep(new SalesRepNameDTO("laura"),1)).thenReturn(new SalesRepDTO(1, "laura"));
+        when(service.updateSalesRep(new SalesRepNameDTO("laura"), 1)).thenReturn(new SalesRepDTO(1, "laura"));
 
         String body = objectMapper.writeValueAsString(new SalesRepDTO("laura"));
         MvcResult result = mockMvc
                 .perform(put("/salesrep/1")
+                        .header("Authorization", "Bearer auth")
                         .content(body)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
@@ -88,10 +91,12 @@ class SalesRepControllerTest {
     @Test
     void deleteSalesRep() throws Exception {
         MvcResult result = mockMvc
-                .perform(delete("/salesrep/1"))
+                .perform(delete("/salesrep/1")
+                        .header("Authorization", "Bearer auth")
+                )
                 .andExpect(status().isOk())
                 .andReturn();
 
-       verify(service).deleteSalesRep(1);
+        verify(service).deleteSalesRep(1);
     }
 }
