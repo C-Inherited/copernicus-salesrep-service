@@ -2,6 +2,7 @@ package com.ironhack.salesrep.service.impl;
 
 import com.ironhack.salesrep.client.LeadClient;
 import com.ironhack.salesrep.client.OpportunityClient;
+import com.ironhack.salesrep.controller.impl.AuthController;
 import com.ironhack.salesrep.dto.*;
 import com.ironhack.salesrep.model.SalesRep;
 import com.ironhack.salesrep.repository.SalesRepRepository;
@@ -32,9 +33,10 @@ public class SalesRepService implements ISalesRepService {
     public CompleteSalesRepDTO findById(Integer salesRepId) {
         SalesRep salesRep = getSalesRep(salesRepId);
         CircuitBreaker circuitBreakerLead = circuitBreakerFactory.create("leads-service");
-        List<LeadDTO> leadDTOList = circuitBreakerLead.run(()->leadClient.findAllBySalesRepId(salesRepId),throwable -> leadFallBack(salesRepId));
+        List<LeadDTO> leadDTOList = circuitBreakerLead.run(() -> leadClient.findAllBySalesRepId(salesRepId, "Bearer " + AuthController.getContacLeadAuthOk()), throwable -> leadFallBack(salesRepId));
         CircuitBreaker circuitBreakerOpportunity = circuitBreakerFactory.create("opportunities-service");
-        List<OpportunityDTO> opportunityDTOList =circuitBreakerOpportunity.run(()->opportunityClient.findAllBySalesRepId(salesRepId),throwable -> opportunityFallback(salesRepId));
+        List<OpportunityDTO> opportunityDTOList = circuitBreakerOpportunity.run(() -> opportunityClient.findAllBySalesRepId(salesRepId, "Bearer " + AuthController.getContactOpportunityAuthOk()),
+                throwable -> opportunityFallback(salesRepId));
         return new CompleteSalesRepDTO(salesRep.getSalesRepId(), salesRep.getName(), opportunityDTOList, leadDTOList);
     }
 
@@ -62,9 +64,13 @@ public class SalesRepService implements ISalesRepService {
 
     private List<OpportunityDTO> opportunityFallback(Integer salesRepId) {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Opportunity service is down :(");
-    };
+    }
+
+    ;
 
     private List<LeadDTO> leadFallBack(Integer salesRepId) {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lead service is down :(");
-    };
+    }
+
+    ;
 }

@@ -19,25 +19,25 @@ public class SalesRepController implements ISalesRepController {
 
     @GetMapping("/salesrep/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CompleteSalesRepDTO getSalesRepById(@PathVariable(name = "id") Integer id) {
+    public CompleteSalesRepDTO getSalesRepById(@PathVariable(name = "id") Integer id, @RequestHeader(value = "Authorization") String authorizationHeader) {
         return service.findById(id);
     }
 
     @PostMapping("/salesrep")
     @ResponseStatus(HttpStatus.CREATED)
-    public SalesRepDTO saveSalesRep(@RequestBody @Valid SalesRepNameDTO name) {
+    public SalesRepDTO saveSalesRep(@RequestBody @Valid SalesRepNameDTO name, @RequestHeader(value = "Authorization") String authorizationHeader) {
         return service.saveSalesRep(name);
     }
 
     @PutMapping("/salesrep/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public SalesRepDTO updateSalesRep(@RequestBody @Valid SalesRepNameDTO name, @PathVariable(name = "id") Integer id) {
+    public SalesRepDTO updateSalesRep(@RequestBody @Valid SalesRepNameDTO name, @PathVariable(name = "id") Integer id, @RequestHeader(value = "Authorization") String authorizationHeader) {
         return service.updateSalesRep(name, id);
     }
 
     @DeleteMapping("/salesrep/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteSalesRep(@PathVariable(name = "id") Integer id) {
+    public void deleteSalesRep(@PathVariable(name = "id") Integer id, @RequestHeader(value = "Authorization") String authorizationHeader) {
         service.deleteSalesRep(id);
     }
 }
