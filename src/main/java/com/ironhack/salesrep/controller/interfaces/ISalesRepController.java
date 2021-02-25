@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 public interface ISalesRepController {
 
-    public CompleteSalesRepDTO getSalesRepById(Integer id, String authorizationHeader);
+    public CompleteSalesRepDTO getSalesRepById(Integer id);
 
-    public SalesRepDTO saveSalesRep(SalesRepNameDTO name, String authorizationHeader);
+    public SalesRepDTO saveSalesRep(SalesRepNameDTO name);
 
-    public SalesRepDTO updateSalesRep(SalesRepNameDTO name, Integer id, String authorizationHeader);
+    public SalesRepDTO updateSalesRep(SalesRepNameDTO name, Integer id);
 
-    public void deleteSalesRep(Integer id, String authorizationHeader);
+    public void deleteSalesRep(Integer id);
 }
